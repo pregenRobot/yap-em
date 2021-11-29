@@ -28,11 +28,14 @@ def add_path(path: str, action: str):
     else:
         raise Exception("Invalid action")
 
+
+# Add the necessary folders to the system
 add_path(ROOT_FOLDER, "folder")
 add_path(BIN_PATH, "folder")
 add_path(WAREHOUSE_PATH, "folder")
 add_path(ALIAS_PATH, "file")
 
+# Add a default alias.json tracker
 with open(ALIAS_PATH, 'w') as f:
     json.dump({
         "yap-em": [YAPM_PATH],
