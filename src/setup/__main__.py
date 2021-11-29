@@ -13,14 +13,29 @@ with open(os.path.join(__location__, 'default.json'), 'r') as f:
 
 ROOT_FOLDER = settings['root'].replace("$USER",__currentuser__)
 
-if not os.path.exists(ROOT_FOLDER):
-    os.makedirs(ROOT_FOLDER)
+WAREHOUSE_PATH = os.path.join(ROOT_FOLDER, "warehouse")
+BIN_PATH = os.path.join(ROOT_FOLDER, "bin")
+ALIAS_PATH = os.path.join(ROOT_FOLDER, "alias.json")
+YAPM_PATH = os.path.join(WAREHOUSE_PATH, "bin/yapm")
 
+def add_path(path: str, action: str):
+    if (action == "folder"):
+        if not os.path.exists(path):
+            os.makedirs(path)
+    elif (action == "file"):
+        if not os.path.isfile(path):
+            open(path, 'a').close()
+    else:
+        raise Exception("Invalid action")
 
+add_path(ROOT_FOLDER, "folder")
+add_path(BIN_PATH, "folder")
+add_path(WAREHOUSE_PATH, "folder")
+add_path(ALIAS_PATH, "file")
 
-# if not os.path.exists(ROOT_FOLDER):
-    # os.makedirs(ROOT_FOLDER)
-
-
+with open(ALIAS_PATH, 'w') as f:
+    json.dump({
+        "yap-em": [YAPM_PATH],
+    }, f, indent = 4, sort_keys = True)
 
 
